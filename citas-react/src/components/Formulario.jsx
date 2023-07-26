@@ -1,16 +1,60 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
+import Error from './Error';
 
-const Formulario = () => {
+const Formulario = ({ patients, setPatients }) => {
     const [name, setName] = useState('');
+    const [owner, setOwner] = useState('');
+    const [email, setEmail] = useState('');
+    const [newDate, setNewDate] = useState('');
+    const [symptoms, setSymptoms] = useState('');
+    const [error, setError] = useState(false);
+
+    // Function to handle change on inputs
+    // const onInputChange = ({ target: { value } }) => {
+    //     setName(value);
+    // }
+
+    const onResetForm = () => {
+        setName('');
+        setOwner('');
+        setEmail('');
+        setNewDate('');
+        setSymptoms('');
+        setError(false);
+    }
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        if ([ name, owner, email, newDate, symptoms ].includes('')) {
+            setError( true );
+            return;
+        }
+
+        setError( false );
+
+        const newPatients = {
+            name,
+            owner,
+            email,
+            newDate,
+            symptoms,
+        };
+
+        setPatients([ ...patients, newPatients ]);
+
+        onResetForm();
+    }
 
     return (
-        <div className="md:w-1/2 lg:w-2/5">
+        <div className="md:w-1/2 lg:w-2/5 mx-5">
             <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
             <p className="text-lg mt-5 text-center mb-10">
                 Añade Pacientes y {''}
                 <span className="text-indigo-600 font-bold">Administralos</span>
             </p>
-            <form className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+            <form onSubmit={ handleSubmit } className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
+                { error && <Error message='Todos los campos son obligatorios' /> }
                 <div className="mb-5">
                     <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">Nombre Mascota</label>
                     <input
@@ -19,7 +63,7 @@ const Formulario = () => {
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                         id="mascota"
                         value={ name }
-                        onChange={({ target: { value } }) => setName(value)}
+                        onChange={ ({ target: { value } }) => setName(value) }
                     />
                 </div>
 
@@ -30,6 +74,8 @@ const Formulario = () => {
                         placeholder="Nombre del Propietario"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                         id="propietario"
+                        value={ owner }
+                        onChange={ ({ target: { value } }) => setOwner(value) }
                     />
                 </div>
 
@@ -40,6 +86,8 @@ const Formulario = () => {
                         placeholder="Email Contacto Propietario"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                         id="email"
+                        value={ email }
+                        onChange={ ({ target: { value } }) => setEmail(value) }
                     />
                 </div>
 
@@ -49,6 +97,8 @@ const Formulario = () => {
                         type="date"
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
                         id="alta"
+                        value={ newDate }
+                        onChange={ ({ target: { value } }) => setNewDate(value) }
                     />
                 </div>
 
@@ -56,7 +106,9 @@ const Formulario = () => {
                     <label htmlFor="sintomas" className="block text-gray-700 uppercase font-bold">Sintomas</label>
                     <textarea
                         className="border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md"
-                        id="sintomas" 
+                        id="sintomas"
+                        value={ symptoms }
+                        onChange={ ({ target: { value } }) => setSymptoms(value) }
                     />
                 </div>
 
