@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import Error from './Error';
 
 const Formulario = ({ patients, setPatients }) => {
@@ -23,6 +24,13 @@ const Formulario = ({ patients, setPatients }) => {
         setError(false);
     }
 
+    const generatedId = () => {
+        const random = Math.random().toString(36).slice(2, -1);
+        const date = Date.now().toString(36);
+
+        return date + random;
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
 
@@ -39,6 +47,7 @@ const Formulario = ({ patients, setPatients }) => {
             email,
             newDate,
             symptoms,
+            id: generatedId(),
         };
 
         setPatients([ ...patients, newPatients ]);
@@ -54,7 +63,7 @@ const Formulario = ({ patients, setPatients }) => {
                 <span className="text-indigo-600 font-bold">Administralos</span>
             </p>
             <form onSubmit={ handleSubmit } className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
-                { error && <Error message='Todos los campos son obligatorios' /> }
+                { error && <Error><p>Todos los campos son obligatorios</p></Error> }
                 <div className="mb-5">
                     <label htmlFor="mascota" className="block text-gray-700 uppercase font-bold">Nombre Mascota</label>
                     <input
@@ -122,5 +131,10 @@ const Formulario = ({ patients, setPatients }) => {
         </div>
     )
 }
+
+Formulario.propTypes = {
+    patients: PropTypes.array,
+    setPatients: PropTypes.func,
+};
 
 export default Formulario
