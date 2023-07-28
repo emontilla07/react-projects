@@ -1,14 +1,19 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Error from './Error';
 
-const Formulario = ({ patients, setPatients }) => {
-    const [name, setName] = useState('');
-    const [owner, setOwner] = useState('');
-    const [email, setEmail] = useState('');
-    const [newDate, setNewDate] = useState('');
-    const [symptoms, setSymptoms] = useState('');
-    const [error, setError] = useState(false);
+const Formulario = ({ patients, setPatients, patient }) => {
+    const [ name, setName ] = useState('');
+    const [ owner, setOwner ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ newDate, setNewDate ] = useState('');
+    const [ symptoms, setSymptoms ] = useState('');
+    const [ error, setError ] = useState( false );
+
+    useEffect(() => {
+        
+    }, [ patient ])
+    
 
     // Function to handle change on inputs
     // const onInputChange = ({ target: { value } }) => {
@@ -25,8 +30,8 @@ const Formulario = ({ patients, setPatients }) => {
     }
 
     const generatedId = () => {
-        const random = Math.random().toString(36).slice(2, -1);
-        const date = Date.now().toString(36);
+        const random = Math.random().toString( 36 ).slice( 2, -1 );
+        const date = Date.now().toString( 36 );
 
         return date + random;
     }
@@ -58,10 +63,12 @@ const Formulario = ({ patients, setPatients }) => {
     return (
         <div className="md:w-1/2 lg:w-2/5 mx-5">
             <h2 className="font-black text-3xl text-center">Seguimiento Pacientes</h2>
+
             <p className="text-lg mt-5 text-center mb-10">
                 Añade Pacientes y {''}
                 <span className="text-indigo-600 font-bold">Administralos</span>
             </p>
+
             <form onSubmit={ handleSubmit } className="bg-white shadow-md rounded-lg py-10 px-5 mb-10">
                 { error && <Error><p>Todos los campos son obligatorios</p></Error> }
                 <div className="mb-5">
@@ -135,6 +142,7 @@ const Formulario = ({ patients, setPatients }) => {
 Formulario.propTypes = {
     patients: PropTypes.array,
     setPatients: PropTypes.func,
+    patient: PropTypes.object,
 };
 
 export default Formulario

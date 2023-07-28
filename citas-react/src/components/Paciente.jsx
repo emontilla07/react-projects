@@ -1,6 +1,7 @@
+/* eslint-disable react/prop-types */
 import PropTypes from 'prop-types';
 
-const Paciente = ({ patients }) => {
+const Paciente = ({ patients, setPatient }) => {
     const { name, owner, email, newDate, symptoms } = patients;
 
     return (
@@ -34,6 +35,7 @@ const Paciente = ({ patients }) => {
                 <button
                     type="button"
                     className="py-2 px-10 bg-indigo-600 hover:bg-indigo-700 text-white font-bold uppercase rounded-lg"
+                    onClick={() => setPatient( patients )}
                 >
                     Editar
                 </button>

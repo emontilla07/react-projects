@@ -1,12 +1,8 @@
+/* eslint-disable react/prop-types */
 import PropTypes from 'prop-types';
 import Paciente from './Paciente';
 
-const ListadoPacientes = ({ patients }) => {
-    // console.log( patients );
-    // patients.map(( patient, index ) => {
-    //     console.log({ patient, index });
-    // });
-
+const ListadoPacientes = ({ patients, setPatient }) => {
     return (
         <div className="md:w-1/2 lg:3/5 md:h-screen overflow-y-scroll">
             { patients && patients.length ? (
@@ -17,7 +13,7 @@ const ListadoPacientes = ({ patients }) => {
                         <span className="text-indigo-600 font-bold">Pacientes y Citas</span>
                     </p>
                     { patients.map(( patient ) => (
-                        <Paciente key={ patient.id } patients={ patient } />
+                        <Paciente key={ patient.id } patients={ patient } setPatient={ setPatient } />
                     )) }
                 </>
             ) : (
