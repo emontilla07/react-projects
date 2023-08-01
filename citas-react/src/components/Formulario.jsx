@@ -11,8 +11,20 @@ const Formulario = ({ patients, setPatients, patient }) => {
     const [ error, setError ] = useState( false );
 
     useEffect(() => {
-        
-    }, [ patient ])
+        if ( Object.keys( patient ).length > 0 ) {
+            setName( patient.name );
+            setOwner( patient.owner );
+            setEmail( patient.email );
+            setNewDate( patient.newDate );
+            setSymptoms( patient.symptoms );
+        }
+    }, [ patient ]);
+
+    // useEffect(() => {
+    //     if ( Object.keys( patient ) > 0 ) {
+    //         console.log( patient );
+    //     }
+    // }, [ patient ]);
     
 
     // Function to handle change on inputs
@@ -132,6 +144,7 @@ const Formulario = ({ patients, setPatients, patient }) => {
                     type="submit"
                     className="bg-indigo-600 w-full p-3 text-white uppercase font-bold cursonr pointer transition-color 
                                hover:bg-indigo-700 cursor-pointer transition-colors"
+                    value={ patient.id ? 'Editar Paciente' : 'Agregar Paciente' }
 
                 />
             </form>

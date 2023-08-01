@@ -31,6 +31,7 @@ const ListadoPacientes = ({ patients, setPatient }) => {
 
 ListadoPacientes.propTypes = {
     patients: PropTypes.array,
+    setPatient: PropTypes.func,
 };
 
 export default ListadoPacientes
