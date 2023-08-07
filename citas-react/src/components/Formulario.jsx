@@ -1,6 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
+import Error from './Error';
 
-const Formulario = () => {
+const Formulario = ({ pacientes, setPacientes, paciente }) => {
     const [ nombre, setNombre ] = useState('');
     const [ propietario, setPropietario ] = useState('');
     const [ email, setEmail ] = useState('');
@@ -8,17 +10,46 @@ const Formulario = () => {
     const [ sintoma, setSintoma ] = useState('');
     const [ error, setError ] = useState( false );
 
+    useEffect(() => {
+        console.log( paciente );
+    }, [ paciente ]);
+
+    const generarId = () => {
+        const fecha = Date.now().toString( 36 );
+        const random = Math.random().toString( 36 ).slice( 2, -1 );
+
+        return fecha + random;
+    }
+
     const handleSubmit = e => {
         e.preventDefault();
 
         // Validacion de formulario
         if ( [ nombre, propietario, email, fecha, sintoma, ].includes('') ) {
-            console.log( 'Hay al menos un campo vacío' );
             setError( true );
             return;
         }
 
         setError( false );
+
+        // Creando objeto
+        const objetoPaciente = {
+            nombre,
+            propietario,
+            email,
+            fecha,
+            sintoma,
+            id: generarId(),
+        };
+
+        setPacientes([ ...pacientes, objetoPaciente ]);
+
+        // Reiniciar el formulario
+        setNombre('');
+        setPropietario('');
+        setEmail('');
+        setFecha('');
+        setSintoma('');
     }
 
     return (
@@ -31,11 +62,7 @@ const Formulario = () => {
             </p>
 
             <form className="bg-white mb-10 rounded-lg px-5 py-10 shadow-md" onSubmit={ handleSubmit }>
-                { error && (
-                    <div>
-                        <p className="bg-red-800 font-bold mb-3 p-3 text-center text-white uppercase">No todos los campos están llenos</p>
-                    </div>
-                ) }
+                { error && <Error mensaje='Todos los campos son obligatorios' /> }
                 <div>
                     <label
                         htmlFor="mascota"
@@ -140,5 +167,11 @@ const Formulario = () => {
         </div>
     )
 }
+
+Formulario.propTypes = {
+    pacientes: PropTypes.array.isRequired,
+    setPacientes: PropTypes.func.isRequired,
+    paciente: PropTypes.object.isRequired,
+};
 
 export default Formulario;
