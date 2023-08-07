@@ -4,7 +4,7 @@ import ListadoPacientes from './components/ListadoPacientes';
 
 function App() {
     return (
-        <div className="container h-screen mt-20 mx-auto">
+        <div className="container h-screen mt-20 mx-auto w-11/12">
             <Header />
             <div className="mt-12 md:flex">
                 <Formulario />

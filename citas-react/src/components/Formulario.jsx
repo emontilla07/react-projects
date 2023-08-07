@@ -1,6 +1,28 @@
+import { useState } from 'react';
+
 const Formulario = () => {
+    const [ nombre, setNombre ] = useState('');
+    const [ propietario, setPropietario ] = useState('');
+    const [ email, setEmail ] = useState('');
+    const [ fecha, setFecha ] = useState('');
+    const [ sintoma, setSintoma ] = useState('');
+    const [ error, setError ] = useState( false );
+
+    const handleSubmit = e => {
+        e.preventDefault();
+
+        // Validacion de formulario
+        if ( [ nombre, propietario, email, fecha, sintoma, ].includes('') ) {
+            console.log( 'Hay al menos un campo vacío' );
+            setError( true );
+            return;
+        }
+
+        setError( false );
+    }
+
     return (
-        <div className="md:w-1/2 lg:w-2/5">
+        <div className="mx-5 md:w-1/2 lg:w-2/5">
             <h2 className="font-black text-3xl text-center  ">Seguimiento Pacientes</h2>
 
             <p className="mb-10 mt-5 text-center text-lg">
@@ -8,7 +30,12 @@ const Formulario = () => {
                 <span className="text-indigo-600 font-bold">Administralos</span>
             </p>
 
-            <form className="bg-white mb-10 rounded-lg px-5 py-10 shadow-md">
+            <form className="bg-white mb-10 rounded-lg px-5 py-10 shadow-md" onSubmit={ handleSubmit }>
+                { error && (
+                    <div>
+                        <p className="bg-red-800 font-bold mb-3 p-3 text-center text-white uppercase">No todos los campos están llenos</p>
+                    </div>
+                ) }
                 <div>
                     <label
                         htmlFor="mascota"
@@ -23,6 +50,8 @@ const Formulario = () => {
                         id="mascota"
                         className="border-2 mb-5 mt-2 p-2 placeholder-gray-400 rounded-md w-full
                                    focus:outline outline-2 outline-offset-0 outline-blue-400"
+                        value={ nombre }
+                        onChange={ e => setNombre( e.target.value ) }
                     />
                 </div>
 
@@ -40,6 +69,8 @@ const Formulario = () => {
                         id="propietario"
                         className="border-2 mb-5 mt-2 p-2 placeholder-gray-400 rounded-md w-full
                                    focus:outline outline-2 outline-offset-0 outline-blue-400"
+                        value={ propietario }
+                        onChange={ e => setPropietario( e.target.value ) }
                     />
                 </div>
 
@@ -57,6 +88,8 @@ const Formulario = () => {
                         id="email"
                         className="border-2 mb-5 mt-2 p-2 placeholder-gray-400 rounded-md w-full
                                    focus:outline outline-2 outline-offset-0 outline-blue-400"
+                        value={ email }
+                        onChange={ e => setEmail( e.target.value ) }
                     />
                 </div>
 
@@ -73,6 +106,8 @@ const Formulario = () => {
                         id="alta"
                         className="border-2 mb-5 mt-2 p-2 placeholder-gray-400 rounded-md w-full
                                    focus:outline outline-2 outline-offset-0 outline-blue-400"
+                        value={ fecha }
+                        onChange={ e => setFecha( e.target.value ) }
                     />
                 </div>
 
@@ -89,6 +124,8 @@ const Formulario = () => {
                         placeholder="Describe los Sintomas"
                         className="border-2 mb-5 mt-2 p-2 placeholder-gray-400 rounded-md w-full
                                    focus:outline outline-2 outline-offset-0 outline-blue-400"
+                        value={ sintoma }
+                        onChange={ e => setSintoma( e.target.value ) }
                     />
                 </div>
 
