@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import Error from './Error';
 
-const Formulario = ({ pacientes, setPacientes, paciente }) => {
+const Formulario = ({ pacientes, setPacientes, paciente, setPaciente }) => {
     const [ nombre, setNombre ] = useState('');
     const [ propietario, setPropietario ] = useState('');
     const [ email, setEmail ] = useState('');
@@ -11,7 +11,13 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
     const [ error, setError ] = useState( false );
 
     useEffect(() => {
-        console.log( paciente );
+        if ( Object.keys( paciente ).length > 0 ) {
+            setNombre( paciente.nombre );
+            setPropietario( paciente.propietario );
+            setEmail( paciente.email );
+            setFecha( paciente.fecha );
+            setSintoma( paciente.sintoma );
+        }
     }, [ paciente ]);
 
     const generarId = () => {
@@ -39,10 +45,17 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
             email,
             fecha,
             sintoma,
-            id: generarId(),
         };
 
-        setPacientes([ ...pacientes, objetoPaciente ]);
+        if ( paciente.id ) {
+            objetoPaciente.id = paciente.id;
+            const pacientesActualizados = pacientes.map(( pacienteState ) => pacienteState.id === paciente.id ? objetoPaciente : pacienteState);
+            setPacientes( pacientesActualizados );
+            setPaciente({});
+        } else {
+            objetoPaciente.id = generarId();
+            setPacientes([ ...pacientes, objetoPaciente ]);
+        }
 
         // Reiniciar el formulario
         setNombre('');
@@ -159,7 +172,7 @@ const Formulario = ({ pacientes, setPacientes, paciente }) => {
                 <div>
                     <input
                         type="submit"
-                        value="Agregar Paciente"
+                        value={ paciente.id ? 'Editar Paciente' : 'Agregar Paciente' }
                         className="bg-indigo-600 cursor-pointer font-bold hover:bg-indigo-700 p-2 transition-colors text-white uppercase w-full"
                     />
                 </div>
@@ -172,6 +185,7 @@ Formulario.propTypes = {
     pacientes: PropTypes.array.isRequired,
     setPacientes: PropTypes.func.isRequired,
     paciente: PropTypes.object.isRequired,
+    setPaciente: PropTypes.func.isRequired,
 };
 
 export default Formulario;
