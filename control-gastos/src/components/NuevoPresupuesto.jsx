@@ -2,13 +2,19 @@ import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Mensaje } from './Mensaje';
 
-export const NuevoPresupuesto = ({ presupuesto, setPresupuesto }) => {
+export const NuevoPresupuesto = ({ presupuesto, setPresupuesto, setIsValidPresupuesto }) => {
     const [mensaje, setMensaje] = useState('');
 
     const handlePresupuesto = e => {
         e.preventDefault();
 
-        (!Number(presupuesto) || Number(presupuesto) < 0) ? setMensaje('No es un presupuesto válido') : console.log('Si es un presupuesto válido');
+        if (!presupuesto || presupuesto < 0) {
+            setMensaje('No es un presupuesto valido');
+            return;
+        }
+        
+        setMensaje('');
+        setIsValidPresupuesto(true);
     }
 
     return (
@@ -26,9 +32,9 @@ export const NuevoPresupuesto = ({ presupuesto, setPresupuesto }) => {
                     <input
                         className="nuevo-presupuesto"
                         placeholder="Añade tu Presupuesto"
-                        type="text"
+                        type="number"
                         value={ presupuesto }
-                        onChange={({ target: { value } }) => setPresupuesto(value)}
+                        onChange={({ target: { value } }) => setPresupuesto(Number(value))}
                     />
 
                     <input
@@ -44,6 +50,7 @@ export const NuevoPresupuesto = ({ presupuesto, setPresupuesto }) => {
 }
 
 NuevoPresupuesto.propTypes = {
-    presupuesto: PropTypes.string.isRequired,
+    presupuesto: PropTypes.number.isRequired,
     setPresupuesto: PropTypes.func.isRequired,
+    setIsValidPresupuesto: PropTypes.func,
 };
