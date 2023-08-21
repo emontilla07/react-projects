@@ -1,15 +1,24 @@
 import { NuevoPresupuesto } from './NuevoPresupuesto';
 import PropTypes from 'prop-types';
+import { ControlPresupuesto } from './ControlPresupuesto';
 
-export const Header = ({ presupuesto, setPresupuesto }) => {
+
+export const Header = ({ presupuesto, setPresupuesto, isValidPresupuesto, setIsValidPresupuesto }) => {
     return (
         <header>
             <h1>Planificador de Gastos</h1>
 
-            <NuevoPresupuesto
+            { isValidPresupuesto ? (
+                <ControlPresupuesto
                 presupuesto={ presupuesto }
-                setPresupuesto={ setPresupuesto }
-            />
+                />
+            ) : (
+                <NuevoPresupuesto
+                    presupuesto={ presupuesto }
+                    setPresupuesto={ setPresupuesto }c
+                    setIsValidPresupuesto={ setIsValidPresupuesto }
+                />
+            ) }
         </header>
     )
 }
@@ -17,4 +26,6 @@ export const Header = ({ presupuesto, setPresupuesto }) => {
 Header.propTypes = {
     presupuesto: PropTypes.number,
     setPresupuesto: PropTypes.func,
+    isValidPresupuesto: PropTypes.bool,
+    setIsValidPresupuesto: PropTypes.func,
 };
