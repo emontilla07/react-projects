@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { Mensaje } from './Mensaje';
 import CerrarBtn from '../img/cerrar.svg';
 
-export const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) => {
+export const Modal = ({ setModal, animarModal, setAnimarModal, guardarGastos }) => {
     const [nombre, setNombre] = useState('');
     const [cantidad, setCantidad] = useState('');
     const [categoria, setCategoria] = useState('');
@@ -29,7 +29,7 @@ export const Modal = ({ setModal, animarModal, setAnimarModal, guardarGasto }) =
             return;
         }
 
-        guardarGasto({ nombre, cantidad, categoria });
+        guardarGastos({ nombre, cantidad, categoria });
     }
 
     return (
@@ -106,5 +106,5 @@ Modal.propTypes = {
     setModal: PropTypes.func,
     animarModal: PropTypes.bool,
     setAnimarModal: PropTypes.func,
-    guardarGasto: PropTypes.func,
+    guardarGastos: PropTypes.func,
 };
