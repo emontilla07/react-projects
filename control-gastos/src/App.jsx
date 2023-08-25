@@ -15,12 +15,17 @@ function App() {
 
 	useEffect(() => {
 		if (Object.keys(gastoEditar).length > 0) {
-			handleNuevoGasto();
+			setModal(true);
+
+			setTimeout(() => {
+				setAnimarModal(true);
+			}, 500);
 		}
 	}, [gastoEditar]);
 
 	const handleNuevoGasto = () => {
 		setModal(true);
+		setGastoEditar({});
 
 		setTimeout(() => {
 			setAnimarModal(true);
@@ -28,15 +33,28 @@ function App() {
 	}
 
 	const guardarGastos = gasto => {
-		gasto.id = generarId();
-		gasto.fecha = Date.now();
-		setGastos([...gastos, gasto]);
-
+		if (gasto.id) {
+			// Actualizar
+			const gastosActualizados = gastos.map(gastoState => gastoState.id === gasto.id ? gasto : gastoState);
+			setGastos(gastosActualizados);
+			setGastoEditar({});
+		} else {
+			// Nuevo Gasto
+			gasto.id = generarId();
+			gasto.fecha = Date.now();
+			setGastos([...gastos, gasto]);
+		}
 		setAnimarModal(false);
+	
+		setTimeout(() => {
+			setModal(false);
+		}, 500);
+	}
 
-        setTimeout(() => {
-            setModal(false);
-        }, 500);
+	const eliminarGastos = id => {
+		const gastosActualizados = gastos.filter(gasto => gasto.id !== id);
+
+		setGastos(gastosActualizados)
 	}
 
 	return (
@@ -52,7 +70,11 @@ function App() {
 			{ isValidPresupuesto && (
 				<>
 					<main>
-						<ListadoGastos gastos={ gastos } setGastoEditar={ setGastoEditar } />
+						<ListadoGastos
+							gastos={ gastos }
+							setGastoEditar={ setGastoEditar }
+							eliminarGastos={ eliminarGastos }
+						/>
 					</main>
 					<div className="nuevo-gasto">
 						<img
@@ -64,7 +86,16 @@ function App() {
 				</>
 			) }
 
-			{ modal && <Modal setModal={ setModal } animarModal={ animarModal } setAnimarModal={ setAnimarModal } guardarGastos={ guardarGastos } /> }
+			{ modal && 
+				<Modal
+					setModal={ setModal } 
+					animarModal={ animarModal } 
+					setAnimarModal={ setAnimarModal } 
+					guardarGastos={ guardarGastos }
+					gastoEditar={ gastoEditar }
+					setGastoEditar={ setGastoEditar }
+				/> 
+			}
 		</div>
 	)
 }

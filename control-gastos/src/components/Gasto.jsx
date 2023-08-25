@@ -20,8 +20,8 @@ const diccionarioIconos = {
     suscripciones: IconoSuscripciones,
 };
 
-export const Gasto = ({ gasto, setGastoEditar }) => {
-    const { categoria, nombre, cantidad, fecha } = gasto;
+export const Gasto = ({ gasto, setGastoEditar, eliminarGastos }) => {
+    const { categoria, nombre, cantidad, id, fecha } = gasto;
 
     const leadingActions = () => (
         <LeadingActions>
@@ -33,7 +33,10 @@ export const Gasto = ({ gasto, setGastoEditar }) => {
 
     const trailingActions = () => (
         <TrailingActions>
-            <SwipeAction onClick={ () => console.log('Eliminar...') }>
+            <SwipeAction
+                onClick={ () => eliminarGastos(id) }
+                destructive={ true }
+            >
                 Eliminar
             </SwipeAction>
         </TrailingActions>
@@ -67,4 +70,5 @@ export const Gasto = ({ gasto, setGastoEditar }) => {
 Gasto.propTypes = {
     gasto: PropTypes.object,
     setGastoEditar: PropTypes.func,
+    eliminarGastos: PropTypes.func,
 };
