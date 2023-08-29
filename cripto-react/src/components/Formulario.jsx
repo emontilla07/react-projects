@@ -69,7 +69,7 @@ export const Formulario = () => {
                 onClick={ handleSubmit }
             >
                 <SelectMoneda />
-                
+
                 <SelectCriptomoneda />
 
                 <InputSubmit

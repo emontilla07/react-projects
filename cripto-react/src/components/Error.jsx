@@ -7,7 +7,7 @@ const Texto = styled.div `
     font-family: 'Lato', sans-serif;
     font-size: 22px;
     font-weight: 700;
-    padding: 15px;
+    padding: 10px;
     text-align: center;
     text-transform: uppercase;
 `
