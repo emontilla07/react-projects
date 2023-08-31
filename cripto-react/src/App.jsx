@@ -1,5 +1,5 @@
-import { Formulario } from './components/Formulario';
 import styled from '@emotion/styled';
+import { Formulario } from './components/Formulario';
 import ImagenCripto from './img/imagen-criptos.png';
 
 const Contenedor = styled.div `
@@ -28,14 +28,13 @@ const Heading = styled.h1 `
     margin-bottom: 50px;
     margin-top: 80px;
     text-align: center;
-
     &::after {
-        background-color: #66a2fe;
         content: '';
+        background-color: #66a2fe;
         display: block;
         margin: 10px auto 0 auto;
         height: 6px;
-        width: 120px;
+        width: 100px;
     }
 `
 
