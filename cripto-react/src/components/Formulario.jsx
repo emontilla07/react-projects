@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import styled from '@emotion/styled';
 import { useSelectMonedas } from '../hooks/useSelectMonedas';
 import { monedas } from '../data/monedas';
@@ -22,7 +23,7 @@ const InputSubmit = styled.input `
     }
 `
 
-export const Formulario = () => {
+export const Formulario = ({ setMonedas }) => {
     const [criptos, setCriptos] = useState([]);
     const [error, setError] = useState(false);
 
@@ -51,6 +52,11 @@ export const Formulario = () => {
         e.preventDefault();
         
         ([moneda, criptomoneda].includes('') ? setError(true) : setError(false));
+
+        setMonedas({
+            moneda,
+            criptomoneda,
+        });
     }
 
     return (
@@ -70,3 +76,7 @@ export const Formulario = () => {
         </>
     )
 }
+
+Formulario.propTypes = {
+    setMonedas: PropTypes.func,
+};
