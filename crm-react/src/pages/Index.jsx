@@ -2,7 +2,6 @@ import { useLoaderData } from 'react-router-dom';
 
 export const Index = () => {
     const datos = useLoaderData();
-
     console.log(datos);
 
     return (
