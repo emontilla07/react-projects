@@ -39,3 +39,8 @@ export const loader = () => {
 
     return clientes;
 }
+
+export const action = () => {
+    console.log('Submit al formulario...');
+    return null;
+}
