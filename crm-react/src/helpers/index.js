@@ -40,7 +40,33 @@ export const loader = () => {
     return clientes;
 }
 
-export const action = () => {
-    console.log('Submit al formulario...');
-    return null;
+export const action = async ({ request }) => {
+    const formData = await request.formData();
+    // console.log(formData.get('nombre'));
+    const datos = Object.fromEntries(formData);
+
+    const email = formData.get('email');
+
+    // Validación
+    const errores = [];
+
+    if (Object.values(datos).includes('')) {
+        errores.push('Todos los campos son obligatorios');
+    }
+
+    // eslint-disable-next-line no-control-regex, no-useless-escape
+    let regex = new RegExp("([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])");
+
+    if (!regex.test(email)) {
+        errores.push('El Email no es valido');
+    }
+
+    // Retornar datos si hay errores
+    if (Object.keys(errores).length) {
+        return errores;
+        // console.error('Si hay errores');
+        // console.log(Object.keys(errores));
+    }
+
+    // return null;
 }
